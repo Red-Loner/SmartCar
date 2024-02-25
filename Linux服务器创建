@@ -1,0 +1,29 @@
+import socket
+
+# 设置服务器地址和端口
+SERVER_ADDRESS = '192.168.137.129'  # 服务器的IP地址
+SERVER_PORT = 1234  # 服务器监听的端口
+
+# 创建套接字127.0.0.1
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    # 绑定地址和端口
+    s.bind((SERVER_ADDRESS, SERVER_PORT))
+    # 开始监听连接
+    s.listen(1)
+    print(f"Server listening on {SERVER_ADDRESS}:{SERVER_PORT}")
+
+    # 等待客户端连接
+    conn, addr = s.accept()
+    print(f"Connected by {addr}")
+
+    while True:
+        # 接收数据
+        data = conn.recv(1024)
+        if not data:
+            break
+        data = data.decode()
+        print(f"Received: {data}")
+        #
+
+    # 关闭连接
+    conn.close()
